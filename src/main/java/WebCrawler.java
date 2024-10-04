@@ -16,13 +16,44 @@ public class WebCrawler {
             Document document = Jsoup.connect(baseUrl).get();
 
             // 문제 제목 가져오기 및 파일명으로 변환
-            String title = document.select("body > div:nth-of-type(1) > ol > li:nth-of-type(3)").text();
-            String fileName = title.replace(" ", "_");
+            Element titleElement = document.selectFirst("li.active"); // 제목이 포함된 li 요소 선택
+            String title = titleElement != null ? titleElement.text() : "제목 없음";
+            String fileName = title.replace(" ", "_").replaceAll("[^\\p{L}\\d_]", "_");
 
-            // 문제 설명의 첫 번째 문단만 추출
-            Element problemDescriptionElement = document.select("div.markdown p").first();
-            String problemDescription = problemDescriptionElement != null ? problemDescriptionElement.text() : "문제 설명을 불러올 수 없습니다.";
+            // 문제 설명 전체 추출
+            Element markdownDiv = document.selectFirst("div.markdown");
+            StringBuilder problemDescriptionMarkdown = new StringBuilder();
 
+            if (markdownDiv != null) {
+                Elements children = markdownDiv.children();
+                for (Element child : children) {
+                    String tagName = child.tagName();
+                    if (tagName.matches("h\\d+") && child.text().contains("제한사항")) {
+                        // "제한사항" 헤딩을 만나면 문제 설명 부분 종료
+                        break;
+                    }
+                    // 문제 설명 내용 추가
+                    if (!child.text().isEmpty()) {
+                        if (tagName.equals("p")) {
+                            problemDescriptionMarkdown.append("\n").append(child.text()).append("\n");
+                        } else if (tagName.equals("ul")) {
+                            problemDescriptionMarkdown.append(parseList(child)).append("\n");
+                        } else if (tagName.equals("table")) {
+                            // 테이블 앞에 빈 줄 추가
+                            problemDescriptionMarkdown.append("\n");
+                            problemDescriptionMarkdown.append(convertTableToMarkdown(child)).append("\n");
+                        } else if (tagName.matches("h\\d+")) {
+                            problemDescriptionMarkdown.append("\n").append("#### ").append(child.text()).append("\n");
+                        } else {
+                            problemDescriptionMarkdown.append(child.text()).append("\n");
+                        }
+                    }
+                }
+            } else {
+                problemDescriptionMarkdown.append("문제 설명을 불러올 수 없습니다.");
+            }
+
+            // 이하 나머지 코드는 변경 없음
             // 제한사항 추출
             Element limitationsHeading = document.selectFirst("div.markdown h5:contains(제한사항)");
             StringBuilder limitationsMarkdown = new StringBuilder();
@@ -61,8 +92,7 @@ public class WebCrawler {
                             exampleDescriptionMarkdown.append("\n").append(nextElement.text()).append("\n");
                         } else if (tagName.equals("ul")) {
                             exampleDescriptionMarkdown.append(parseList(nextElement)).append("\n");
-                        } else if (tagName.equals("h5") || tagName.matches("h\\d+")) {
-                            // 헤딩 태그인 경우 빈 줄과 함께 텍스트 추가
+                        } else if (tagName.matches("h\\d+")) {
                             exampleDescriptionMarkdown.append("\n").append(nextElement.text()).append("\n");
                         } else {
                             exampleDescriptionMarkdown.append(nextElement.text()).append("\n");
@@ -76,7 +106,7 @@ public class WebCrawler {
 
             // Markdown 포맷으로 파일 구성
             String markdownContent = "### " + title + "\n\n" +
-                    "#### 문제 설명\n" + problemDescription + "\n\n" +
+                    "#### 문제 설명\n" + problemDescriptionMarkdown.toString() + "\n" +
                     "---\n\n" +
                     "#### 제한사항\n\n" +
                     limitationsMarkdown.toString() + "\n" +
@@ -91,7 +121,7 @@ public class WebCrawler {
             writer.close();
 
             // Java 파일에 지정된 템플릿 작성
-            String javaTemplate = "public class " + title.replace(" ", "_") + " {\n\n" +
+            String javaTemplate = "public class " + fileName + " {\n\n" +
                     "    public static int solution() {\n" +
                     "        int answer = 0;\n\n" +
                     "        return answer;\n" +
