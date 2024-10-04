@@ -29,7 +29,7 @@ public class A_강조하기 {
 
     public static void main (String[] args) {
 
-        String yString = "abstract algebra";
+        String myString = "abstract algebra";
 
         System.out.println(solution(myString));
 
