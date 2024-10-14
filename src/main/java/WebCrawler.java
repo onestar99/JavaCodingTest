@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 public class WebCrawler {
     public static void main(String[] args) {
-        String baseUrl = "https://school.programmers.co.kr/learn/courses/30/lessons/86491";
+        String baseUrl = "https://school.programmers.co.kr/learn/courses/30/lessons/42840";
         try {
             // 웹 페이지 크롤링 (문제 설명 페이지)
             Document document = Jsoup.connect(baseUrl).get();
