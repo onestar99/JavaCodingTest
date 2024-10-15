@@ -1,3 +1,5 @@
+package Programmers;
+
 public class base {
 
     public static int solution() {

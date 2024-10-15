@@ -1,4 +1,4 @@
-package Backjoon;
+package Backjoon.골드4;
 
 import java.io.BufferedReader;
 import java.io.IOException;
