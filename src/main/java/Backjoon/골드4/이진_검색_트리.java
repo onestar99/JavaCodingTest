@@ -6,7 +6,7 @@ import java.util.*;
 
 public class 이진_검색_트리 {
 
-    static Node root;
+    static Node1 root;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -36,8 +36,8 @@ public class 이진_검색_트리 {
 
 
     // BST 노드 삽입
-    public static Node insert(Node node, int key) {
-        if (node == null) return new Node(key);
+    public static Node1 insert(Node1 node, int key) {
+        if (node == null) return new Node1(key);
 
         if (key < node.key) node.left = insert(node.left, key);
         else node.right = insert(node.right, key);
@@ -46,7 +46,7 @@ public class 이진_검색_트리 {
     }
 
     // 후위 순회 결과 출력
-    public static void postOrder(Node node, List<Integer> result) {
+    public static void postOrder(Node1 node, List<Integer> result) {
         if (node == null) return;
 
         postOrder(node.left, result);
@@ -55,11 +55,11 @@ public class 이진_검색_트리 {
     }
 }
 
-class Node {
+class Node1 {
     int key;
-    Node left, right;
+    Node1 left, right;
 
-    Node(int key) {
+    Node1(int key) {
         this.key = key;
         left = right = null;
     }
