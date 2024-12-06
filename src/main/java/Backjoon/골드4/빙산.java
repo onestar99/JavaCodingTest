@@ -28,20 +28,23 @@ public class 빙산 {
         System.out.println(simulate(board));
     }
 
-    // 빙산 시뮬레이션 함수
+    // 빙산 시뮬레이션
     public static int simulate(int[][] board) {
         int years = 0;
 
         while (true) {
             int icebergCount = countIcebergs(board);
+            // 모두 녹음
             if (icebergCount == 0) {
-                return 0; // 모두 녹음
+                return 0;
             }
+            // 분리됨
             if (icebergCount > 1) {
-                return years; // 분리됨
+                return years;
             }
 
-            meltIceberg(board); // 1년 후 빙산 녹이기
+            // 한 해가 지났습니다. 모든 빙산들은 녹으십시오.
+            meltIceberg(board);
             years++;
         }
     }
