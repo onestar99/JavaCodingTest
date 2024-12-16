@@ -33,9 +33,7 @@ public class 움직이는_미로_탈출 {
 
     static boolean bfs() {
         Queue<int[]> queue = new LinkedList<>();
-        boolean[][] visited = new boolean[N][N];
         queue.add(new int[]{7, 0, 0}); // 왼쪽 아래 시작
-        visited[7][0] = true;
 
         while (!queue.isEmpty()) {
             int size = queue.size();
@@ -44,8 +42,7 @@ public class 움직이는_미로_탈출 {
                 int[] cur = queue.poll();
                 int y = cur[0], x = cur[1], time = cur[2];
 
-                // 목표 위치 도달
-                if (y == 0 && x == 7) return true;
+                if (time > 8) return true;
 
                 // 현재 위치에 벽이 있으면 패스
                 if (board[y][x] == '#') continue;
@@ -59,8 +56,7 @@ public class 움직이는_미로_탈출 {
                     if (ny < 0 || nx < 0 || ny >= N || nx >= N) continue;
 
                     // 방문 확인 및 빈 칸 여부 확인
-                    if (!visited[ny][nx] && board[ny][nx] == '.') {
-                        visited[ny][nx] = true;
+                    if (board[ny][nx] == '.') {
                         queue.add(new int[]{ny, nx, time + 1});
                     }
                 }
@@ -69,11 +65,6 @@ public class 움직이는_미로_탈출 {
             // 벽 이동
             moveWalls();
 
-            // 잊지말자.. 벽이 이동한 뒤에 방문 배열 초기화
-            for (int[] cur : queue) {
-                int y = cur[0], x = cur[1];
-                if (board[y][x] == '#') queue.remove(cur); // 벽이 위치한 경우 큐에서 제거
-            }
         }
 
         return false;
