@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 /**
  *
  * 인접리스트를 일단 구현한다..
- *
+ * dp를 이해 못한다..
  */
 
 public class 사회망_서비스SNS {
