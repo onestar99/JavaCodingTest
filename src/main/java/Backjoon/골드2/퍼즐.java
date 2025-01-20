@@ -5,7 +5,7 @@ import java.util.*;
 
 /**
  * A* 사용해서 최대한 가지치기
- * 맨헤튼 거리 사용해서 휴리스틱으로 최적의 경로 유도
+ * 맨헤튼 거리 사용해서 휴리스틱으로 최적 경로 유도
  *
  * 상태 여부 조건식 걸기
  * 시작 상태에서 현재 상태까지의 이동 횟수
@@ -95,7 +95,7 @@ public class 퍼즐 {
     private static int heuristic(String state) {
         int distance = 0;
         for (int i = 0; i < 9; i++) {
-            if (state.charAt(i) == '0') continue;
+            if (state.charAt(i) == '0') continue; // 빈칸
             int value = state.charAt(i) - '1';
             int targetX = value / 3;
             int targetY = value % 3;
