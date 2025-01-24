@@ -1,4 +1,4 @@
-package Programmers.티멕스;
+package Programmers.받은거;
 
 import java.util.ArrayList;
 import java.util.List;

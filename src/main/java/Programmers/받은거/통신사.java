@@ -1,4 +1,4 @@
-package Programmers.티멕스;
+package Programmers.받은거;
 
 public class 통신사 {
     public static void main(String[] args) {
