@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.TreeMap;
 
+/**
+ * 트라이 알고리즘 적용하여서 풀기
+ */
+
 public class 휴대폰_자판 {
 
     public static void main(String[] args) throws IOException {
