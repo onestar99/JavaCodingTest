@@ -45,13 +45,15 @@ public class 방_번호 {
         }
 
         // 최대 자릿수를 구하기
+        // 첫 자리는 반드시 0이 아닌 숫자로 구매해야 하므로, 첫 자리에 minCostNonZero를 사용하고
+        // 나머지는 가장 싼 숫자
         int length = 1 + (M - minCostNonZero) / minCost;
 
         // 초기 방 번호
         int[] answer = new int[length];
         answer[0] = minNonZeroDigit; // 첫 자리에는 0이 아닌 가장 저렴한 숫자
         for (int i = 1; i < length; i++) {
-            answer[i] = minDigit; // 나머지는 가장 싼 숫자
+            answer[i] = minDigit; // 나머지는 가장 싼 숫자 (0일 수도 있어요)
         }
 
 
@@ -72,6 +74,7 @@ public class 방_번호 {
             }
         }
 
+        // 결과 출력
         StringBuilder sb = new StringBuilder();
         for (int digit : answer) {
             sb.append(digit);

@@ -3,6 +3,7 @@ package Backjoon.골드3;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class 주사위_굴리기2 {

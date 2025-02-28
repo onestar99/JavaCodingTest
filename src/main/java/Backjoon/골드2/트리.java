@@ -21,18 +21,15 @@ public class 트리 {
         StringBuilder sb = new StringBuilder();
 
         for (int t = 0; t < T; t++) {
-            // 노드의 개수
             int n = Integer.parseInt(br.readLine());
             pre = new int[n];
             in = new int[n];
 
-            // 전위 순회 결과 입력
             StringTokenizer st = new StringTokenizer(br.readLine());
             for (int i = 0; i < n; i++) {
                 pre[i] = Integer.parseInt(st.nextToken());
             }
 
-            // 중위 순회 결과 입력
             st = new StringTokenizer(br.readLine());
             for (int i = 0; i < n; i++) {
                 in[i] = Integer.parseInt(st.nextToken());
