@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 /**
  * 뭔가 로직이 더 있나 싶은데, N, M 범위가 작아서 그냥 브루드포스 DFS 일단 시도.
  * DP 필요하다. 시간초과 난다.
+ * DP 추가해서 해결
  */
 
 public class 게임 {
@@ -16,6 +17,7 @@ public class 게임 {
     static boolean[][] visited; // 사이클 여부 확인을 위해
     static int N, M, moveCount;
     static boolean cycleFound;
+    static int[][] dp;
 
     public static void main(String[] args) throws IOException {
 
@@ -27,6 +29,7 @@ public class 게임 {
         board = new int[N][M];
         visited = new boolean[N][M];
         moveCount = -1;
+        dp = new int[N][M];
         for (int i = 0; i < N; i++) {
             String line = br.readLine();
             for (int j = 0; j < M; j++) {
@@ -57,6 +60,10 @@ public class 게임 {
             return 0;
         }
 
+        if (dp[r][c] != 0) {
+            return dp[r][c];
+        }
+
         visited[r][c] = true;
         int maxMoves = 0;
         int moveNumber = board[r][c];
@@ -70,6 +77,7 @@ public class 게임 {
             maxMoves = Math.max(maxMoves, moves);
         }
 
+        dp[r][c] = maxMoves;
         visited[r][c] = false;
         return maxMoves;
     }
