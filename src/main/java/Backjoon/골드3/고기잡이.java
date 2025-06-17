@@ -8,6 +8,14 @@ import java.util.Collections;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
+/**
+ * 그물의 둘레 길이 l을 반으로 나눠 가로 w와 세로 h의 모든 분할 쌍(h, w)을 순회
+ * 각 h에 대해, 물고기 행 위치를 이용해 사각형 상단(r0) 후보를 중복 없이 수집
+ * 특정 r0에서 세로 구간[r0, r0+h]에 속하는 물고기들의 열좌표만 뽑아 정렬
+ * 정렬된 열좌표에 대해 너비 w 범위를 투포인터로 스캔해 최댓값을 갱신
+ * 모든 (h, w)와 r0 후보를 검사한 뒤 얻은 최대 물고기 개수를 출력.
+ */
+
 public class 고기잡이 {
 
     public static void main(String[] args) throws IOException {

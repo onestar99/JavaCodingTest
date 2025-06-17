@@ -8,6 +8,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 입력된 파일명을 숫자 연속 부분은 NumberToken, 나머지 한 글자씩은 CharToken으로 분리
+ * NumberToken은 BigInteger 값으로 비교하고, 값이 같으면 앞의 0 개수(zeroCount)로 순서 정하기.
+ * CharToken은 알파벳 대문자 기준 사전순(A→B→…→Z) 후, 같은 글자면 대문자가 소문자보다 앞.
+ * 두 문자열은 토큰 리스트를 앞에서부터 비교해 첫 차이가 나는 토큰 순으로, 동일하면 토큰 개수로 결정
+ * Arrays.sort로 정렬한 뒤, WrappedString.original을 순서대로 출력
+ */
+
 public class 파일_탐색기 {
 
     public static void main(String[] args) throws IOException {
@@ -29,17 +37,16 @@ public class 파일_탐색기 {
 
     }
 
-    // 문자열 비교를 위한 토큰 클래스 정의
+    // 문자열 비교를 위한 토큰
     static abstract class Token implements Comparable<Token> {
-        // compareTo는 서브클래스에서 구현
     }
 
-    // 숫자 토큰 클래스
+    // 숫자 토큰
     static class NumberToken extends Token {
-        String raw;         // 원본 숫자 문자열 예: "00012"
-        String trimmed;     // leading zero 제거 후 문자열 예: "12"
-        int zeroCount;      // 앞에 붙은 '0' 개수 예: 3
-        BigInteger value;   // 숫자 값 예: 12
+        String raw;
+        String trimmed;
+        int zeroCount;
+        BigInteger value;
 
         NumberToken(String s) {
             this.raw = s;
